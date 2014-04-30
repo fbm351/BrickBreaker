@@ -17,13 +17,22 @@
 		D36EAC93190FFB0400AC2CB9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D36EAC91190FFB0400AC2CB9 /* Main.storyboard */; };
 		D36EAC96190FFB0400AC2CB9 /* FMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D36EAC95190FFB0400AC2CB9 /* FMViewController.m */; };
 		D36EAC99190FFB0400AC2CB9 /* FMMyScene.m in Sources */ = {isa = PBXBuildFile; fileRef = D36EAC98190FFB0400AC2CB9 /* FMMyScene.m */; };
-		D36EAC9B190FFB0400AC2CB9 /* Spaceship.png in Resources */ = {isa = PBXBuildFile; fileRef = D36EAC9A190FFB0400AC2CB9 /* Spaceship.png */; };
 		D36EAC9D190FFB0400AC2CB9 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D36EAC9C190FFB0400AC2CB9 /* Images.xcassets */; };
 		D36EACA4190FFB0400AC2CB9 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D36EACA3190FFB0400AC2CB9 /* XCTest.framework */; };
 		D36EACA5190FFB0400AC2CB9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D36EAC7D190FFB0400AC2CB9 /* Foundation.framework */; };
 		D36EACA6190FFB0400AC2CB9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D36EAC81190FFB0400AC2CB9 /* UIKit.framework */; };
 		D36EACAE190FFB0400AC2CB9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D36EACAC190FFB0400AC2CB9 /* InfoPlist.strings */; };
 		D36EACB0190FFB0400AC2CB9 /* BrickBreakerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D36EACAF190FFB0400AC2CB9 /* BrickBreakerTests.m */; };
+		D36EACBB190FFE6100AC2CB9 /* Paddle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D36EACBA190FFE6100AC2CB9 /* Paddle@2x.png */; };
+		D36EACBD191016C500AC2CB9 /* BallBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D36EACBC191016C500AC2CB9 /* BallBlue@2x.png */; };
+		D36EACBF1910453C00AC2CB9 /* BrickGreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D36EACBE1910453C00AC2CB9 /* BrickGreen@2x.png */; };
+		D36EACC11911257100AC2CB9 /* BrickBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D36EACC01911257100AC2CB9 /* BrickBlue@2x.png */; };
+		D36EACC4191125BE00AC2CB9 /* FMBrick.m in Sources */ = {isa = PBXBuildFile; fileRef = D36EACC3191125BE00AC2CB9 /* FMBrick.m */; };
+		D36EACC6191131CF00AC2CB9 /* BrickGrey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D36EACC5191131CF00AC2CB9 /* BrickGrey@2x.png */; };
+		D36EACC919113DF400AC2CB9 /* HeartEmpty@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D36EACC719113DF400AC2CB9 /* HeartEmpty@2x.png */; };
+		D36EACCA19113DF400AC2CB9 /* HeartFull@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D36EACC819113DF400AC2CB9 /* HeartFull@2x.png */; };
+		D36EACCD191178AE00AC2CB9 /* BrickExplosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = D36EACCB191178AE00AC2CB9 /* BrickExplosion.sks */; };
+		D36EACCE191178AE00AC2CB9 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = D36EACCC191178AE00AC2CB9 /* spark.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,13 +62,23 @@
 		D36EAC95190FFB0400AC2CB9 /* FMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMViewController.m; sourceTree = "<group>"; };
 		D36EAC97190FFB0400AC2CB9 /* FMMyScene.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FMMyScene.h; sourceTree = "<group>"; };
 		D36EAC98190FFB0400AC2CB9 /* FMMyScene.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FMMyScene.m; sourceTree = "<group>"; };
-		D36EAC9A190FFB0400AC2CB9 /* Spaceship.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Spaceship.png; sourceTree = "<group>"; };
 		D36EAC9C190FFB0400AC2CB9 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D36EACA2190FFB0400AC2CB9 /* BrickBreakerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BrickBreakerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D36EACA3190FFB0400AC2CB9 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		D36EACAB190FFB0400AC2CB9 /* BrickBreakerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BrickBreakerTests-Info.plist"; sourceTree = "<group>"; };
 		D36EACAD190FFB0400AC2CB9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D36EACAF190FFB0400AC2CB9 /* BrickBreakerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BrickBreakerTests.m; sourceTree = "<group>"; };
+		D36EACBA190FFE6100AC2CB9 /* Paddle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Paddle@2x.png"; sourceTree = "<group>"; };
+		D36EACBC191016C500AC2CB9 /* BallBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BallBlue@2x.png"; sourceTree = "<group>"; };
+		D36EACBE1910453C00AC2CB9 /* BrickGreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BrickGreen@2x.png"; sourceTree = "<group>"; };
+		D36EACC01911257100AC2CB9 /* BrickBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BrickBlue@2x.png"; sourceTree = "<group>"; };
+		D36EACC2191125BE00AC2CB9 /* FMBrick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMBrick.h; sourceTree = "<group>"; };
+		D36EACC3191125BE00AC2CB9 /* FMBrick.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMBrick.m; sourceTree = "<group>"; };
+		D36EACC5191131CF00AC2CB9 /* BrickGrey@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BrickGrey@2x.png"; sourceTree = "<group>"; };
+		D36EACC719113DF400AC2CB9 /* HeartEmpty@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HeartEmpty@2x.png"; sourceTree = "<group>"; };
+		D36EACC819113DF400AC2CB9 /* HeartFull@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "HeartFull@2x.png"; sourceTree = "<group>"; };
+		D36EACCB191178AE00AC2CB9 /* BrickExplosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BrickExplosion.sks; sourceTree = "<group>"; };
+		D36EACCC191178AE00AC2CB9 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +140,7 @@
 		D36EAC85190FFB0400AC2CB9 /* BrickBreaker */ = {
 			isa = PBXGroup;
 			children = (
+				D36EACB9190FFE4D00AC2CB9 /* Images */,
 				D36EAC8E190FFB0400AC2CB9 /* FMAppDelegate.h */,
 				D36EAC8F190FFB0400AC2CB9 /* FMAppDelegate.m */,
 				D36EAC91190FFB0400AC2CB9 /* Main.storyboard */,
@@ -128,9 +148,12 @@
 				D36EAC95190FFB0400AC2CB9 /* FMViewController.m */,
 				D36EAC97190FFB0400AC2CB9 /* FMMyScene.h */,
 				D36EAC98190FFB0400AC2CB9 /* FMMyScene.m */,
-				D36EAC9A190FFB0400AC2CB9 /* Spaceship.png */,
+				D36EACC2191125BE00AC2CB9 /* FMBrick.h */,
+				D36EACC3191125BE00AC2CB9 /* FMBrick.m */,
 				D36EAC9C190FFB0400AC2CB9 /* Images.xcassets */,
 				D36EAC86190FFB0400AC2CB9 /* Supporting Files */,
+				D36EACCB191178AE00AC2CB9 /* BrickExplosion.sks */,
+				D36EACCC191178AE00AC2CB9 /* spark.png */,
 			);
 			path = BrickBreaker;
 			sourceTree = "<group>";
@@ -162,6 +185,20 @@
 				D36EACAC190FFB0400AC2CB9 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D36EACB9190FFE4D00AC2CB9 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				D36EACBA190FFE6100AC2CB9 /* Paddle@2x.png */,
+				D36EACBC191016C500AC2CB9 /* BallBlue@2x.png */,
+				D36EACBE1910453C00AC2CB9 /* BrickGreen@2x.png */,
+				D36EACC01911257100AC2CB9 /* BrickBlue@2x.png */,
+				D36EACC5191131CF00AC2CB9 /* BrickGrey@2x.png */,
+				D36EACC719113DF400AC2CB9 /* HeartEmpty@2x.png */,
+				D36EACC819113DF400AC2CB9 /* HeartFull@2x.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,10 +278,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D36EACCA19113DF400AC2CB9 /* HeartFull@2x.png in Resources */,
+				D36EACCE191178AE00AC2CB9 /* spark.png in Resources */,
+				D36EACBB190FFE6100AC2CB9 /* Paddle@2x.png in Resources */,
 				D36EAC8A190FFB0400AC2CB9 /* InfoPlist.strings in Resources */,
+				D36EACBF1910453C00AC2CB9 /* BrickGreen@2x.png in Resources */,
+				D36EACBD191016C500AC2CB9 /* BallBlue@2x.png in Resources */,
+				D36EACC919113DF400AC2CB9 /* HeartEmpty@2x.png in Resources */,
 				D36EAC9D190FFB0400AC2CB9 /* Images.xcassets in Resources */,
-				D36EAC9B190FFB0400AC2CB9 /* Spaceship.png in Resources */,
+				D36EACC11911257100AC2CB9 /* BrickBlue@2x.png in Resources */,
+				D36EACCD191178AE00AC2CB9 /* BrickExplosion.sks in Resources */,
 				D36EAC93190FFB0400AC2CB9 /* Main.storyboard in Resources */,
+				D36EACC6191131CF00AC2CB9 /* BrickGrey@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +308,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D36EACC4191125BE00AC2CB9 /* FMBrick.m in Sources */,
 				D36EAC8C190FFB0400AC2CB9 /* main.m in Sources */,
 				D36EAC99190FFB0400AC2CB9 /* FMMyScene.m in Sources */,
 				D36EAC90190FFB0400AC2CB9 /* FMAppDelegate.m in Sources */,
