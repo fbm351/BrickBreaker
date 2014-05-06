@@ -8,6 +8,7 @@
 
 #import "FMMyScene.h"
 #import "FMBrick.h"
+#import "FMMenu.h"
 
 @interface FMMyScene()
 
@@ -26,10 +27,17 @@
     BOOL _positionBall;
     NSArray *_hearts;
     SKLabelNode *_levelDisplay;
+    FMMenu *_menu;
+    SKAction *_ballBounceSound;
+    SKAction *_paddleBounceSound;
+    SKAction *_levelUpSound;
+    SKAction *_loseLifeSound;
 }
 
 static const uint32_t kFMBallCatagory = 0x1 << 0;
 static const uint32_t kFMPaddleCatagory = 0x1 << 1;
+static const uint32_t kFMEdgeCatagory = 0x1 << 2;
+
 
 static inline CGVector radiansToVector(CGFloat radians)
 {
@@ -56,9 +64,10 @@ static inline CGVector radiansToVector(CGFloat radians)
         
         // Setup Edge
         self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, -128, size.width, size.height + 100)];
+        self.physicsBody.categoryBitMask = kFMEdgeCatagory;
         
         // Add HUD bar
-        SKSpriteNode *bar = [SKSpriteNode spriteNodeWithColor:[SKColor blackColor] size:CGSizeMake(size.width, 28)];
+        SKSpriteNode *bar = [SKSpriteNode spriteNodeWithColor:[SKColor colorWithRed:0.831 green:0.831 blue:0.831 alpha:1.0] size:CGSizeMake(size.width, 28)];
         bar.position = CGPointMake(0, size.height);
         bar.anchorPoint = CGPointMake(0, 1);
         [self addChild:bar];
@@ -66,12 +75,19 @@ static inline CGVector radiansToVector(CGFloat radians)
         // Setup Level display
         _levelDisplay = [SKLabelNode labelNodeWithFontNamed:@"Futura"];
         _levelDisplay.text = @"LEVEL 1";
-        _levelDisplay.fontColor = [SKColor whiteColor];
+        _levelDisplay.fontColor = [SKColor grayColor];
         _levelDisplay.fontSize = 15;
         _levelDisplay.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
         _levelDisplay.verticalAlignmentMode = SKLabelVerticalAlignmentModeTop;
         _levelDisplay.position = CGPointMake(10, -10);
         [bar addChild:_levelDisplay];
+        
+        //Setup Sounds
+        
+        _ballBounceSound = [SKAction playSoundFileNamed:@"BallBounce.caf" waitForCompletion:NO];
+        _paddleBounceSound = [SKAction playSoundFileNamed:@"PaddleBounce.caf" waitForCompletion:NO];
+        _levelUpSound = [SKAction playSoundFileNamed:@"LevelUp.caf" waitForCompletion:NO];
+        _loseLifeSound = [SKAction playSoundFileNamed:@"LoseLife.caf" waitForCompletion:NO];
         
         //Setup brick layer
         _brickLayer = [SKNode node];
@@ -98,7 +114,11 @@ static inline CGVector radiansToVector(CGFloat radians)
         _paddle.physicsBody.dynamic = NO;
         [self addChild:_paddle];
         
+        // Set Menu
         
+        _menu = [[FMMenu alloc] init];
+        _menu.position = CGPointMake(self.size.width * 0.5, self.size.height * 0.5);
+        [self addChild:_menu];
         
         //Set Initial values
         _ballSpeed = 250.0;
@@ -147,6 +167,7 @@ static inline CGVector radiansToVector(CGFloat radians)
 {
     _currentLevel = currentLevel;
     _levelDisplay.text = [NSString stringWithFormat:@"Level %i", currentLevel];
+    _menu.levelNumber = currentLevel;
 }
 
 - (void)loadLevel:(int)levelNumber
@@ -164,7 +185,7 @@ static inline CGVector radiansToVector(CGFloat radians)
             break;
             
         case 2:
-            level = @[@[@1, @1, @2, @2, @1, @1],
+            level = @[@[@4, @1, @2, @2, @1, @4],
                       @[@2, @2, @0, @0, @2, @2],
                       @[@2, @0, @0, @0, @0, @2],
                       @[@1, @0, @1, @1, @0, @1],
@@ -217,9 +238,25 @@ static inline CGVector radiansToVector(CGFloat radians)
     ball.physicsBody.restitution = 1.0;
     ball.physicsBody.velocity = velocity;
     ball.physicsBody.categoryBitMask = kFMBallCatagory;
-    ball.physicsBody.contactTestBitMask = kFMPaddleCatagory | kFMBrickCatagory;
+    ball.physicsBody.contactTestBitMask = kFMPaddleCatagory | kFMBrickCatagory | kFMEdgeCatagory;
+    ball.physicsBody.collisionBitMask = kFMPaddleCatagory | kFMBrickCatagory | kFMEdgeCatagory;
     [self addChild:ball];
     return ball;
+}
+
+- (void)spawnExtraBall:(CGPoint)position
+{
+    CGVector direction;
+    if (arc4random_uniform(2) == 0)
+    {
+        direction = radiansToVector(M_PI_4);
+    }
+    else
+    {
+        direction = radiansToVector(M_PI * 0.75);
+    }
+    
+    [self createBallWithLocation:position andVelocity:CGVectorMake(direction.dx * _ballSpeed, direction.dy * _ballSpeed)];
 }
 
 - (void)didBeginContact:(SKPhysicsContact *)contact
@@ -254,6 +291,7 @@ static inline CGVector radiansToVector(CGFloat radians)
             CGVector direction = radiansToVector(angle);
             firstBody.velocity = CGVectorMake(direction.dx * _ballSpeed, direction.dy *_ballSpeed);
         }
+        [self runAction:_paddleBounceSound];
     }
     
     if (firstBody.categoryBitMask == kFMBallCatagory && secondBody.categoryBitMask == kFMBrickCatagory)
@@ -261,7 +299,17 @@ static inline CGVector radiansToVector(CGFloat radians)
         if ([secondBody.node respondsToSelector:@selector(hit)])
         {
             [secondBody.node performSelector:@selector(hit)];
+            if (((FMBrick *)secondBody.node).spawnsExtraBall)
+            {
+                [self spawnExtraBall:[_brickLayer convertPoint:secondBody.node.position toNode:self]];
+            }
         }
+        [self runAction:_ballBounceSound];
+    }
+    
+    if (firstBody.categoryBitMask == kFMBallCatagory && secondBody.categoryBitMask == kFMEdgeCatagory)
+    {
+        [self runAction:_ballBounceSound];
     }
 }
 
@@ -270,51 +318,77 @@ static inline CGVector radiansToVector(CGFloat radians)
     /* Called when a touch begins */
     for (UITouch *touch in touches)
     {
-        if (!_ballReleased)
+        if (_menu.hidden)
         {
-            _positionBall = YES;
+            if (!_ballReleased)
+            {
+                _positionBall = YES;
+            }
+            _touchLocation = [touch locationInNode:self];
         }
-        _touchLocation = [touch locationInNode:self];
     }
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    for (UITouch *touch in touches)
+    if (_menu.hidden)
     {
-        //Calculate how far touch has moved
-        CGFloat xMovement = [touch locationInNode:self].x - _touchLocation.x;
-        
-        //Move Paddle distance of moved touch
-        _paddle.position = CGPointMake(_paddle.position.x + xMovement, _paddle.position.y);
-        
-        CGFloat paddleMinX = -_paddle.size.width * 0.25;
-        CGFloat paddleMaxX = self.size.width + (_paddle.size.width * 0.25);
-        
-        //Keep Paddle in Screen
-        if (_paddle.position.x < paddleMinX)
+        for (UITouch *touch in touches)
         {
-            _paddle.position = CGPointMake(paddleMinX, _paddle.position.y);
+            //Calculate how far touch has moved
+            CGFloat xMovement = [touch locationInNode:self].x - _touchLocation.x;
+            
+            //Move Paddle distance of moved touch
+            _paddle.position = CGPointMake(_paddle.position.x + xMovement, _paddle.position.y);
+            
+            CGFloat paddleMinX = -_paddle.size.width * 0.25;
+            CGFloat paddleMaxX = self.size.width + (_paddle.size.width * 0.25);
+            
+            if (_positionBall)
+            {
+                paddleMinX = _paddle.size.width * 0.5;
+                paddleMaxX = self.size.width - (_paddle.size.width * 0.5);
+            }
+            
+            //Keep Paddle in Screen
+            if (_paddle.position.x < paddleMinX)
+            {
+                _paddle.position = CGPointMake(paddleMinX, _paddle.position.y);
+            }
+            
+            if (_paddle.position.x > paddleMaxX)
+            {
+                _paddle.position = CGPointMake(paddleMaxX, _paddle.position.y);
+            }
+            
+            _touchLocation = [touch locationInNode:self];
         }
-        
-        if (_paddle.position.x > paddleMaxX)
-        {
-            _paddle.position = CGPointMake(paddleMaxX, _paddle.position.y);
-        }
-        
-        _touchLocation = [touch locationInNode:self];
     }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (_positionBall)
+    if (_menu.hidden)
     {
-        _ballReleased = YES;
-        _positionBall = NO;
-        [_paddle removeAllChildren];
-        [self createBallWithLocation:CGPointMake(_paddle.position.x, _paddle.position.y + _paddle.size.height) andVelocity:CGVectorMake(0, _ballSpeed)];
+        if (_positionBall)
+        {
+            _ballReleased = YES;
+            _positionBall = NO;
+            [_paddle removeAllChildren];
+            [self createBallWithLocation:CGPointMake(_paddle.position.x, _paddle.position.y + _paddle.size.height) andVelocity:CGVectorMake(0, _ballSpeed)];
+        }
     }
+    else
+    {
+        for (UITouch *touch in touches)
+        {
+            if ([[_menu nodeAtPoint:[touch locationInNode:_menu]].name isEqualToString:@"Play Button"])
+            {
+                [_menu hide];
+            }
+        }
+    }
+    
 }
 
 - (void)didSimulatePhysics
@@ -341,6 +415,8 @@ static inline CGVector radiansToVector(CGFloat radians)
         }
         [self loadLevel:self.currentLevel];
         [self newBall];
+        [_menu show];
+        [self runAction:_levelUpSound];
     }
     else if (![self childNodeWithName:@"ball"] && !_positionBall && _ballReleased)
     {
@@ -352,8 +428,10 @@ static inline CGVector radiansToVector(CGFloat radians)
             self.lives = 2;
             self.currentLevel = 1;
             [self loadLevel:self.currentLevel];
+            [_menu show];
         }
         [self newBall];
+        [self runAction:_loseLifeSound];
         
     }
 }

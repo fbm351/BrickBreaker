@@ -9,6 +9,9 @@
 #import "FMBrick.h"
 
 @implementation FMBrick
+{
+    SKAction *_brickSmashSound;
+}
 
 - (instancetype)initWithType:(BrickType)type
 {
@@ -26,6 +29,10 @@
             self = [super initWithImageNamed:@"BrickGrey"];
             break;
             
+        case Yellow:
+            self = [super initWithImageNamed:@"BrickYellow"];
+            break;
+            
         default:
             self = nil;
             break;
@@ -37,6 +44,9 @@
         self.physicsBody.dynamic = NO;
         self.type = type;
         self.indestructible = (type == Grey);
+        self.spawnsExtraBall = (type == Yellow);
+        
+        _brickSmashSound = [SKAction playSoundFileNamed:@"BrickSmash.caf" waitForCompletion:NO];
     }
     return self;
 }
@@ -46,12 +56,19 @@
     switch (self.type) {
         case Green:
             [self runAction:[SKAction removeFromParent]];
+            [self runAction:_brickSmashSound];
             [self createExplosion];
             break;
             
         case Blue:
             self.texture = [SKTexture textureWithImageNamed:@"BrickGreen"];
             self.type = Green;
+            break;
+            
+        case Yellow:
+            [self runAction:[SKAction removeFromParent]];
+            [self runAction:_brickSmashSound];
+            [self createExplosion];
             break;
             
         default:
